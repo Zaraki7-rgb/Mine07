@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Valentine ❤️</title>
+<style>
+:root {
+    --primary: #9d0208;
+    --accent: #e63946;
+    --bg: #fde2e4;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fde2e4, #fadadd);
+    font-family: "Segoe UI", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Fluttering hearts */
+.flutter-heart {
+    position: fixed;
+    font-size: 12px;
+    pointer-events: none;
+    animation: floatHeart linear infinite;
+    z-index: 1;
+}
+
+@keyframes floatHeart {
+    0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+}
+
+/* Container */
+.container {
+    text-align: center;
+    z-index: 2;
+}
+
+/* Couple Animation */
+.couple-container {
+    position: absolute;
+    top: 5%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    z-index: 2;
+}
+
+.couple {
+    width: 120px;
+    height: 120px;
+    background: url('kiss.jpg') no-repeat center/contain;
+    animation: kissAnimation 2s infinite alternate;
+}
+
+@keyframes kissAnimation {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-5px) rotate(1deg); }
+}
+
+/* Envelope */
+.envelope {
+    position: relative;
+    width: 360px;
+    height: 230px;
+    background: var(--primary);
+    border-radius: 10px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 3;
+}
+
+/* Flap */
+.flap {
+    position: absolute;
+    inset: 0;
+    background: #7a0106;
+    clip-path: polygon(0 0, 50% 60%, 100% 0);
+    transform-origin: top;
+    transition: transform 0.8s ease;
+    z-index: 3;
+}
+
+/* Letter */
+.letter {
+    position: absolute;
+    left: 15px;
+    bottom: 10px;
+    width: 330px;
+    height: 210px;
+    background: white;
+    border-radius: 8px;
+    padding: 22px;
+    box-sizing: border-box;
+    transform: translateY(80%);
+    transition: transform 0.9s ease;
+    z-index: 2;
+}
+
+.letter h2 {
+    margin: 0;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 22px;
+    text-align: center;
+}
+
+.letter p {
+    margin: 12px 0;
+    font-size: 15px;
+    color: #444;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+button {
+    padding: 9px 22px;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+
+.yes {
+    background: var(--accent);
+    color: white;
+}
+
+.no {
+    background: #e0e0e0;
+    color: #555;
+}
+
+/* Open state */
+.open .flap {
+    transform: rotateX(180deg);
+}
+
+.open .letter {
+    transform: translateY(0);
+}
+
+/* Gallery */
+.gallery {
+    display: none;
+    margin-top: 30px;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.gallery h3 {
+    color: var(--primary);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    justify-content: center;
+    padding: 0 10px;
+}
+
+.photos img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hint {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+}
+
+/* Celebration hearts */
+.celebrate-heart {
+    position: fixed;
+    bottom: -30px;
+    font-size: 24px;
+    animation: celebrate 4s linear forwards;
+    pointer-events: none;
+    z-index: 999;
+}
+
+@keyframes celebrate {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+}
+
+/* Fireworks particles */
+.firework {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: gold;
+    opacity: 0.9;
+    pointer-events: none;
+    animation: firework 1s ease-out forwards;
+    z-index: 999;
+}
+
+@keyframes firework {
+    0% { transform: translate(0,0) scale(1); opacity:1; }
+    100% { transform: translate(var(--x), var(--y)) scale(2); opacity:0; }
+}
+</style>
+</head>
+<body>
+
+<!-- Fluttering hearts -->
+<script>
+function createFlutterHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'flutter-heart';
+    const hearts = ['❤️','💖','💕','💘','💞'];
+    heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = 10 + Math.random() * 20 + 'px';
+    heart.style.animationDuration = 5 + Math.random() * 5 + 's';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 10000);
+}
+setInterval(createFlutterHeart, 500);
+</script>
+
+<!-- Couple Animation -->
+<div class="couple-container">
+    <div class="couple"></div>
+</div>
+
+<div class="container">
+    <div class="envelope" onclick="toggleEnvelope()">
+        <div class="flap"></div>
+        <div class="letter">
+            <h2>My Wife ❤️</h2>
+            <p>
+                You are my favorite place, my greatest joy,
+                and my forever person. I love you Mynsiem jong ng Muahhhhhhhh!!! 😘❤️
+            </p>
+            <p><strong>Will you be my Valentine?</strong></p>
+
+            <div class="buttons">
+                <button class="yes" onclick="sayYes(event)">Yes ❤️</button>
+                <button class="no" onclick="sayNo(event)">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="hint">Tap the envelope to open 💌</div>
+
+    <!-- Gallery -->
+    <div class="gallery" id="gallery">
+        <h3>Our Memories 💕</h3>
+        <div class="photos">
+            <!-- Replace with your images -->
+            <img src="IMG_20250714_132408.jpg">
+			<img src="IMG_20240125_220513.jpg">
+            <img src="IMG_20240125_222628.jpg">
+			<img src="IMG-20240124-WA0009.jpg">
+			<img src="IMG-20251230-WA0274.jpg">
+			<img src="IMG-20251230-WA0276.jpg">
+			
+        </div>
+    </div>
+</div>
+
+<!-- Audio -->
+<audio id="romanticMusic" loop>
+    <source src="romantic-143301.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function toggleEnvelope() {
+    document.querySelector(".container").classList.toggle("open");
+    const music = document.getElementById("romanticMusic");
+    if (music.paused) music.play().catch(err => console.log("Autoplay blocked", err));
+}
+
+function celebrateLove() {
+    const hearts = ["❤️","💖","💕","💘","💞"];
+    for (let i=0; i<60; i++){
+        const heart = document.createElement("div");
+        heart.className = "celebrate-heart";
+        heart.innerText = hearts[Math.floor(Math.random()*hearts.length)];
+        heart.style.left = Math.random()*100 + "vw";
+        heart.style.fontSize = 18 + Math.random()*22 + "px";
+        heart.style.animationDuration = 3 + Math.random()*3 + "s";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),6000);
+    }
+
+    for (let i=0;i<40;i++){
+        const fw = document.createElement("div");
+        fw.className="firework";
+        let x = (Math.random()-0.5)*300 + "px";
+        let y = (Math.random()-0.5)*300 + "px";
+        fw.style.setProperty("--x",x);
+        fw.style.setProperty("--y",y);
+        fw.style.left = window.innerWidth/2 + "px";
+        fw.style.top = window.innerHeight/2 + "px";
+        fw.style.background = `hsl(${Math.random()*360},80%,60%)`;
+        document.body.appendChild(fw);
+        setTimeout(()=>fw.remove(),1000);
+    }
+}
+
+function sayYes(e){
+    e.stopPropagation();
+    document.getElementById("gallery").style.display="block";
+    celebrateLove();
+}
+
+function sayNo(e){
+    e.stopPropagation();
+    alert("Nice try… but my heart already chose you HUHH HEH BRA HEH BOO HEH TDONG MUT REJECT HANA ❤️");
+}
+</script>
+</body>
+</html>
